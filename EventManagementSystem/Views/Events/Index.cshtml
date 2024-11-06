@@ -1,0 +1,93 @@
+﻿@model List<EventManagementSystem.Models.Entities.Event>
+
+@{
+    ViewData["Title"] = "Events List";
+}
+
+<h2>Events List</h2>
+
+<table id="eventsTable" class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ev in Model)
+        {
+            <tr>
+                <td>@ev.Id</td>
+                <td>@ev.Title</td>
+                <td>@ev.Date</td>
+                <td>@ev.Location</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@ev.Id" class="btn btn-sm btn-primary">Edit</a>
+                    <a asp-action="Details" asp-route-id="@ev.Id" class="btn btn-sm btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@ev.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Contacts pagination">
+    <ul id="pagination" class="pagination"></ul>
+</nav>
+
+<a asp-action="Create" class="btn btn-success">Create New Event</a>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const table = document.getElementById('eventsTable');
+            const tbody = table.querySelector('tbody');
+            const pagination = document.getElementById('pagination');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            const rowsPerPage = 10;
+            let currentPage = 1;
+
+            function showPage(page) {
+                const start = (page - 1) * rowsPerPage;
+                const end = start + rowsPerPage;
+                rows.forEach((row, index) => {
+                    row.style.display = (index >= start && index < end) ? '' : 'none';
+                });
+            }
+
+            function setupPagination() {
+                const pageCount = Math.ceil(rows.length / rowsPerPage);
+                pagination.innerHTML = '';
+                for (let i = 1; i <= pageCount; i++) {
+                    const li = document.createElement('li');
+                    li.classList.add('page-item');
+                    const a = document.createElement('a');
+                    a.href = '#';
+                    a.classList.add('page-link');
+                    a.textContent = i;
+                    a.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        currentPage = i;
+                        showPage(currentPage);
+                        updateActivePageLink();
+                    });
+                    li.appendChild(a);
+                    pagination.appendChild(li);
+                }
+            }
+
+            function updateActivePageLink() {
+                const links = pagination.querySelectorAll('a');
+                links.forEach((link, index) => {
+                    link.parentElement.classList.toggle('active', index + 1 === currentPage);
+                });
+            }
+
+            setupPagination();
+            showPage(currentPage);
+            updateActivePageLink();
+        });
+    </script>
+}

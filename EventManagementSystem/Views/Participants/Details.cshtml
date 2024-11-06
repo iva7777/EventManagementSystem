@@ -1,0 +1,22 @@
+﻿@model EventManagementSystem.Models.ViewModels.ParticipantViewModel
+
+@{
+    ViewData["Title"] = "Participant Details";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">@Model.Name</h2>
+    <div class="card">
+        <div class="card-header">
+            Participant Details
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Name: @Model.Name</h5>
+            <p class="card-text">Email: @Model.Email</p>
+            <p class="card-text">Role: @Model.Role</p>
+            <p class="card-text">Event: @Model.EventTitle</p>
+        </div>
+    </div>
+
+    <a href="@Url.Action("Index", "Participants")" class="btn btn-primary mt-4">Back to Participants</a>
+</div>

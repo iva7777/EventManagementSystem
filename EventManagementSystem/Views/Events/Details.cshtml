@@ -1,0 +1,38 @@
+﻿@model EventManagementSystem.Models.Entities.Event
+
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">@Model.Title</h2>
+    <div class="card">
+        <div class="card-header">
+            Event Details
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Title: @Model.Title</h5>
+            <p class="card-text">Date: @Model.Date.ToShortDateString()</p>
+            <p class="card-text">Location: @Model.Location</p>
+        </div>
+    </div>
+
+    <h3 class="mt-4">Participants</h3>
+    @if (Model.Participants != null && Model.Participants.Any())
+    {
+        <ul class="list-group mt-3">
+            @foreach (var participant in Model.Participants)
+            {
+                <li class="list-group-item">
+                    @participant.Name (@participant.Role)
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="text-muted">No participants have been added to this event.</p>
+    }
+
+    <a href="@Url.Action("Index", "Events")" class="btn btn-primary mt-4">Back to Events</a>
+</div>

@@ -1,0 +1,44 @@
+﻿@model EventManagementSystem.Models.ViewModels.ParticipantViewModel
+
+@{
+    ViewData["Title"] = "Create Participant";
+}
+
+<div class="container mt-5">
+    <h2>Create a New Participant</h2>
+    <form asp-action="Create" method="post" class="mt-4">
+
+        <div class="form-group mb-3">
+            <label asp-for="Name" class="form-label">Participant Name</label>
+            <input asp-for="Name" class="form-control" required />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" type="email" class="form-control" required />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Role" class="form-label">Role</label>
+            <input asp-for="Role" class="form-control" required />
+            <span asp-validation-for="Role" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="EventId" class="form-label">Select Event</label>
+            <select asp-for="EventId" asp-items="ViewBag.Events" class="form-control" required>
+                <option value="">-- Select an Event --</option>
+            </select>
+            <span asp-validation-for="EventId" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Participant</button>
+        <a href="@Url.Action("Index", "Participants")" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
